@@ -120,6 +120,7 @@ class CardId(Enum):
     SHIV = 'shiv'
     SHOCKWAVE = 'shockwave'
     SHRUG_IT_OFF = 'shrug it off'
+    SKEWER = 'skewer'
     SLICE = 'slice'
     SLIMED = 'slimed'
     SNEAKY_STRIKE = 'underhanded strike'  # Weird id alert!
@@ -139,6 +140,7 @@ class CardId(Enum):
     UNLOAD = 'unload'
     UPPERCUT = 'uppercut'
     VOID = 'void'
+    WHIRLWIND = 'whirlwind'
     WILD_STRIKE = 'wild strike'
     WOUND = 'wound'
 
@@ -228,6 +230,8 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 1 if cost is None else cost, True, CardType.ATTACK, exhausts=True)
     if card_id == CardId.FIEND_FIRE:
         return Card(card_id, upgrade, 2 if cost is None else cost, True, CardType.ATTACK, exhausts=True)
+    if card_id == CardId.WHIRLWIND:
+        return Card(card_id, upgrade, 0 if cost is None else cost, False, CardType.ATTACK)
     if card_id == CardId.WOUND:
         return Card(card_id, 0, -1, False, CardType.STATUS)
     if card_id == CardId.DAZED:
@@ -437,3 +441,5 @@ def get_card(card_id: CardId, cost: int = None, upgrade: int = 0) -> Card:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
     if card_id == CardId.OUTMANEUVER:
         return Card(card_id, upgrade, 1 if cost is None else cost, False, CardType.SKILL)
+    if card_id == CardId.SKEWER:
+        return Card(card_id, upgrade, 0 if cost is None else cost, True, CardType.ATTACK)

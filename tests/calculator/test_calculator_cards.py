@@ -1154,3 +1154,33 @@ class CalculatorCardsTest(CalculatorTestFixture):
         play = self.when_playing_the_first_card(state)
         self.see_player_spent_energy(play, 1)
         self.see_player_has_power(play, PowerId.ENERGIZED, 2)
+
+    def test_skewer_one_energy(self):
+        state = self.given_state(CardId.SKEWER)
+        state.player.energy = 1
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 7)
+        self.see_player_has_energy(play, 0)
+
+    def test_skewer_three_energy(self):
+        state = self.given_state(CardId.SKEWER)
+        state.player.energy = 3
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 21)
+        self.see_player_has_energy(play, 0)
+
+    def test_whirlwind_one_energy(self):
+        state = self.given_state(CardId.WHIRLWIND, targets=2)
+        state.player.energy = 1
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 5, enemy_index=0)
+        self.see_enemy_lost_hp(play, 5, enemy_index=1)
+        self.see_player_has_energy(play, 0)
+
+    def test_whirlwind_three_energy(self):
+        state = self.given_state(CardId.WHIRLWIND, targets=2)
+        state.player.energy = 3
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 15, enemy_index=0)
+        self.see_enemy_lost_hp(play, 15, enemy_index=1)
+        self.see_player_has_energy(play, 0)

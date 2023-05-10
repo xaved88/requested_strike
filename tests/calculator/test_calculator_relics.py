@@ -82,6 +82,16 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 0)
         self.see_relic_value(play, RelicId.NUNCHAKU, 9)
 
+    # Whirlwind currently functions by setting energy to 0 after play, which could for example interact poorly with Nunchaku.
+    def test_whirlwind_does_not_prevent_nunchaku_energy(self):
+        state = self.given_state(CardId.WHIRLWIND)
+        state.player.energy = 3
+        state.relics[RelicId.NUNCHAKU] = 9
+        play = self.when_playing_the_first_card(state)
+        self.see_enemy_lost_hp(play, 15)
+        self.see_player_has_energy(play, 1)
+        self.see_relic_value(play, RelicId.NUNCHAKU, 0)
+
     def test_pen_nib_increments_with_attack(self):
         state = self.given_state(CardId.STRIKE_R)
         state.relics[RelicId.PEN_NIB] = 3

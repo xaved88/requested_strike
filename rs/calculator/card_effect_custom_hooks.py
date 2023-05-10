@@ -215,3 +215,11 @@ def bullet_time_post_hook(state: HandStateInterface, effect: CardEffectsInterfac
     for card in state.hand:
         if card.cost != -1:
             card.cost = 0
+
+
+def whirlwind_skewer_pre_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    effect.hits = state.player.energy
+
+
+def whirlwind_skewer_post_hook(state: HandStateInterface, effect: CardEffectsInterface, target_index: int = -1):
+    state.player.energy = 0

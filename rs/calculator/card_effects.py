@@ -361,4 +361,8 @@ def get_card_effects(card: Card, player: Player, draw_pile: List[Card], discard_
         return [CardEffects(target=TargetType.SELF, block=amount, applies_powers={PowerId.NEXT_TURN_BLOCK: amount})]
     if card.id == CardId.OUTMANEUVER:
         return [CardEffects(target=TargetType.SELF, applies_powers={PowerId.ENERGIZED: 2} if not card.upgrade else {PowerId.ENERGIZED: 3})]
+    if card.id == CardId.SKEWER:
+        return [CardEffects(target=TargetType.MONSTER, damage=7 if not card.upgrade else 10, hits=1, pre_hooks=[whirlwind_skewer_pre_hook], post_hooks=[whirlwind_skewer_post_hook])]
+    if card.id == CardId.WHIRLWIND:
+        return [CardEffects(target=TargetType.ALL_MONSTERS, damage=5 if not card.upgrade else 8, hits=1, pre_hooks=[whirlwind_skewer_pre_hook], post_hooks=[whirlwind_skewer_post_hook])]
     return [CardEffects()]
