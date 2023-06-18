@@ -458,6 +458,8 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
                 CardEffects(target=TargetType.SELF, applies_powers={PowerId.ARTIFACT: 1})]
     if card.id == CardId.BOOT_SEQUENCE:
         return [CardEffects(target=TargetType.SELF, block=10 if not card.upgrade else 13)]
+    if card.id == CardId.STEAM_BARRIER:
+        return [CardEffects(target=TargetType.SELF, block=3 if not card.upgrade else 5)]
     if card.id == CardId.STACK:
         return [CardEffects(target=TargetType.SELF,
                             pre_hooks=[stack_pre_hook] if not card.upgrade else [stack_upgraded_pre_hook])]
@@ -466,6 +468,8 @@ def get_card_effects(card: CardInterface, player: PlayerInterface, draw_pile: Li
         return [CardEffects(target=TargetType.SELF, post_hooks=[hook])]
     if card.id == CardId.STREAMLINE:
         return [CardEffects(target=TargetType.MONSTER, damage=15 if not card.upgrade else 20, hits=1)]
+    if card.id == CardId.CLAW:
+        return [CardEffects(target=TargetType.MONSTER, damage=10 if not card.upgrade else 12, hits=1)]
     if card.id == CardId.TURBO:
         return [
             CardEffects(target=TargetType.SELF, energy_gain=2 if not card.upgrade else 3, post_hooks=[turbo_post_hook])]

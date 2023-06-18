@@ -63,6 +63,7 @@ class CardId(Enum):
     CLOAK_AND_DAGGER = 'cloak and dagger'
     CLOTHESLINE = 'clothesline'
     CLUMSY = 'clumsy'
+    CLAW = 'gash'
     COOLHEADED = 'coolheaded'
     COLD_SNAP = 'cold snap'
     COMPILE_DRIVER = 'compile driver'
@@ -199,6 +200,7 @@ class CardId(Enum):
     SNEAKY_STRIKE = 'underhanded strike'  # Weird id alert!
     SPOT_WEAKNESS = 'spot weakness'
     STACK = 'stack'
+    STEAM_BARRIER = 'steam'
     STORM = 'storm'
     STORM_OF_STEEL = 'storm of steel'
     STREAMLINE = 'streamline'
