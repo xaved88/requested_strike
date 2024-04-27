@@ -245,6 +245,13 @@ class BattleState(BattleStateInterface):
 
         self.add_memory_value(MemoryItem.CARDS_THIS_TURN, 1)
 
+        if card.type == CardType.POWER and get_card(CardId.FORCE_FIELD) in self.hand:
+            for c in self.hand:
+                if c.id is CardId.FORCE_FIELD:
+                    c.cost -= 1
+                    if c.cost <= 0:
+                        c.cost = 0
+
         # dispose of cards being played
         if card in self.hand:  # b/c some cards like fiend fire, will destroy themselves before they follow this route
             idx = self.hand.index(card)

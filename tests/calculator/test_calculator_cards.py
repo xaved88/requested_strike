@@ -1518,6 +1518,32 @@ class CalculatorCardsTest(CalculatorTestFixture):
         self.see_enemy_lost_hp(play, 15)
         self.assertEqual(0, play.state.discard_pile[0].cost)
 
+    def test_force_field(self):
+        state = self.given_state(CardId.FORCE_FIELD)
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 4)
+        self.see_player_has_block(play, 12)
+
+    def test_powers_reduce_force_field_cost(self):
+        state = self.given_state(CardId.INFLAME)
+        state.hand.append(get_card(CardId.FORCE_FIELD))
+        play = self.when_playing_the_first_card(state)
+        # self.see_player_spent_energy(play, 4)
+        # self.see_player_has_block(play, 12)
+        self.see_player_has_power(play, PowerId.STRENGTH, 2)
+        self.assertEqual(CardId.FORCE_FIELD, play.state.hand[0].id)
+        self.assertEqual(3, play.state.hand[0].cost)
+
+    def test_powers_reduce_force_field_cost_not_below_0(self):
+        state = self.given_state(CardId.INFLAME)
+        state.hand.append(get_card(CardId.FORCE_FIELD))
+        self.assertEqual(CardId.FORCE_FIELD, state.hand[1].id)
+        state.hand[1].cost = 0
+        play = self.when_playing_the_first_card(state)
+        self.see_player_spent_energy(play, 1)
+        self.see_player_has_power(play, PowerId.STRENGTH, 2)
+        self.assertEqual(0, play.state.hand[0].cost)
+
     def test_turbo(self):
         state = self.given_state(CardId.TURBO)
         play = self.when_playing_the_first_card(state)

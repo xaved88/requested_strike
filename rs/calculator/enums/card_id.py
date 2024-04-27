@@ -135,6 +135,7 @@ class CardId(Enum):
     FLYING_SLEEVES = 'flying sleeves'
     FOLLOW_UP = 'follow-up'
     FOOTWORK = 'footwork'
+    FORCE_FIELD = 'force field'
     FTL = 'ftl'
     FUSION = 'fusion'
     GHOSTLY_ARMOR = 'ghostly armor'
