@@ -6,7 +6,8 @@ comparisons = default_comparisons.copy()
 comparisons.remove(most_free_early_draw)
 comparisons.remove(most_free_draw)
 comparisons.remove(least_incoming_damage_over_1)
-add_to_comparison_list(comparisons, comparison_to_add=least_nob_adjusted_scaling_damage, after=most_lasting_intangible)
+add_to_comparison_list(comparisons, comparison_to_add=least_nob_adjusted_scaling_damage,
+                       after=PLACEHOLDER_VERY_IMPORTANT)
 
 
 # Differences to normal comparator:

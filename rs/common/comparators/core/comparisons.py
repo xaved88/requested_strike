@@ -268,3 +268,23 @@ def avoid_inconvenient_time_warp(best: CA, challenger: CA) -> Optional[bool]:
 def preserve_revive_options(best: CA, challenger: CA) -> Optional[bool]:
     return None if best.revive_option_count() == challenger.revive_option_count() \
         else challenger.revive_option_count() > best.revive_option_count()
+
+
+def PLACEHOLDER_EXTREMELY_IMPORTANT(best: CA, challenger: CA) -> Optional[bool]:
+    # a placeholder for other comparators to reference
+    return None
+
+
+def PLACEHOLDER_VERY_IMPORTANT(best: CA, challenger: CA) -> Optional[bool]:
+    # a placeholder for other comparators to reference
+    return None
+
+
+def PLACEHOLDER_IMPORTANT(best: CA, challenger: CA) -> Optional[bool]:
+    # a placeholder for other comparators to reference
+    return None
+
+
+def PLACEHOLDER_OPTIMIZATIONS(best: CA, challenger: CA) -> Optional[bool]:
+    # a placeholder for other comparators to reference
+    return None

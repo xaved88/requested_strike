@@ -4,8 +4,8 @@ from rs.common.comparators.core.comparisons import *
 
 comparisons = default_comparisons.copy()
 comparisons.remove(lowest_health_monster)
-add_to_comparison_list(comparisons, comparison_to_add=lowest_health_edge_monster, after=most_lasting_intangible)
-move_in_comparison_list(comparisons, comparison_to_move=most_dead_monsters, after=most_lasting_intangible)
+add_to_comparison_list(comparisons, comparison_to_add=lowest_health_edge_monster, after=PLACEHOLDER_VERY_IMPORTANT)
+move_in_comparison_list(comparisons, comparison_to_move=most_dead_monsters, after=PLACEHOLDER_VERY_IMPORTANT)
 
 
 # Difference to normal comparator:
