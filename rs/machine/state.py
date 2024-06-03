@@ -3,6 +3,7 @@ from typing import List
 
 from rs.calculator.interfaces.memory_items import MemoryItem
 from rs.game.deck import Deck
+from rs.machine.character import Character
 from rs.machine.command import Command
 from rs.machine.orb import Orb
 from rs.machine.the_bots_memory_book import TheBotsMemoryBook
@@ -194,3 +195,9 @@ class GameState:
         for idx, choice in enumerate(options):
             options[idx] = choice.replace("+", "")
         return options
+
+    def get_character(self) -> Character:
+        char = self.game_state()["class"].capitalize()
+        if char == "The_silent":
+            char = "Silent"
+        return Character(char)

@@ -3,16 +3,19 @@ from dataclasses import dataclass, field
 from rs.calculator.executor import get_best_battle_action
 from rs.calculator.interfaces.comparator_interface import ComparatorInterface
 from rs.common.comparators.big_fight_comparator import BigFightComparator
-from rs.common.comparators.common_general_comparator import CommonGeneralComparator
+from rs.common.comparators.common_general_comparator import CommonGeneralComparator, add_to_comparison_list, \
+    default_comparisons
 from rs.common.comparators.gremlin_nob_comparator import GremlinNobComparator
 from rs.common.comparators.three_sentry_comparator import ThreeSentriesComparator
 from rs.common.comparators.transient_comparator import TransientComparator
 from rs.common.comparators.waiting_lagavulin_comparator import WaitingLagavulinComparator
 from rs.game.card import CardType
+from rs.machine.character import Character
 from rs.machine.command import Command
 from rs.machine.handlers.handler import Handler
 from rs.machine.handlers.handler_action import HandlerAction
 from rs.machine.state import GameState
+from rs.common.comparators.core.comparisons import *
 
 
 @dataclass
@@ -36,24 +39,21 @@ class CommonBattleHandler(Handler):
         return state.has_command(Command.PLAY) or state.current_action() == "DiscardAction"
 
     def select_comparator(self, state: GameState) -> ComparatorInterface:
+
+        self.adjust_comparator_by_character(state.get_character())
+
         alive_monsters = len(list(filter(lambda m: not m["is_gone"], state.get_monsters())))
-
         big_fight = state.floor() in self.config.big_fight_floors
-
         gremlin_nob_is_present = state.has_monster("Gremlin Nob")
-
         three_sentries_are_alive = state.has_monster("Sentry") \
                                    and alive_monsters == 3
-
         lagavulin_is_sleeping = state.has_monster("Lagavulin") \
                                 and state.combat_state()['turn'] <= 2 \
                                 and not state.game_state()['room_type'] == "EventRoom"
-
         lagavulin_is_worth_delaying = state.deck.contains_type(CardType.POWER) \
                                       or state.deck.contains_cards(["Terror", "Terror+"]) \
                                       or state.has_relic("Warped Tongs") \
                                       or state.has_relic("Ice Cream")
-
         transient_is_present = state.has_monster("Transient") and alive_monsters == 1
 
         if big_fight:
@@ -75,3 +75,12 @@ class CommonBattleHandler(Handler):
         if state.has_command(Command.END):
             return HandlerAction(commands=["end"], memory_book=None)
         return HandlerAction(commands=[], memory_book=None)
+
+
+    def adjust_comparator_by_character(self, character: Character):
+
+        if character == Character.WATCHER:
+            add_to_comparison_list(default_comparisons, comparison_to_add=no_blasphemy, after=PLACEHOLDER_EXTREMELY_IMPORTANT)
+            add_to_comparison_list(default_comparisons, comparison_to_add=most_tranquility, after=most_dead_monsters)
+            add_to_comparison_list(default_comparisons, comparison_to_add=most_enemy_talking_to_hand, after=PLACEHOLDER_IMPORTANT)
+            add_to_comparison_list(default_comparisons, comparison_to_add=killed_with_lesson_learned, after=most_enemy_talking_to_hand)
